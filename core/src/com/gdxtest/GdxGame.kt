@@ -19,7 +19,7 @@ class GdxGame : ApplicationAdapter() {
   }
 
   override fun render() {
-    Gdx.gl.glClearColor(1f, 0f, 0f, 1f)
+    Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     batch.begin()
     world.show(batch)

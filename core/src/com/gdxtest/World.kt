@@ -3,6 +3,7 @@ package com.gdxtest
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
+import java.io.File
 
 enum class Block {
   EMPTY,
@@ -48,11 +49,35 @@ class World : IWorld {
   }
 
   private fun loadWorld() {
+    loadDefaultWorld()
+    loadWorldFile()
+  }
+
+  private fun loadDefaultWorld() {
     for (x in offsetX..(width - 1)) {
       world[x + 0 * width] = Block.GROUND
       world[x + 1 * width] = if (x.rem(2) != 0) Block.STONE else Block.GROUND
       world[x + 2 * width] = Block.GROUND
       world[x + 3 * width] = Block.GRASS
+    }
+  }
+
+  private fun loadWorldFile() {
+    var x: Int = 0
+
+    File(WORLD_FILE_NAME).forEachLine { line ->
+      var y: Int = 0
+      line.forEach { c ->
+        when(c) {
+          ' ' -> world[x + y * width] = Block.EMPTY
+          'G' -> world[x + y * width] = Block.GROUND
+          'g' -> world[x + y * width] = Block.GRASS
+          'S' -> world[x + y * width] = Block.STONE
+        }
+
+        ++y
+      }
+      ++x
     }
   }
 
