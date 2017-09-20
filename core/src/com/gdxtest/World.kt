@@ -22,7 +22,7 @@ class World : IWorld {
 
   private val width: Int
   private val height: Int
-  private val offsetX: Int
+  private var offsetX: Int
   private val offsetY: Int
   private val world: Array<IBlock>
 
@@ -43,6 +43,10 @@ class World : IWorld {
         block.show(batch, x, y)
       }
     }
+  }
+
+  override fun changeX(deltaX: Int) {
+    offsetX += deltaX
   }
 
   fun dispose() {
