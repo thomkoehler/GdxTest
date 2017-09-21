@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.Input.Keys;
 
 class GameScreen : Screen {
-  lateinit var batch: SpriteBatch
-  lateinit var world: IWorld
+  var batch = SpriteBatch()
+  var world: IWorld = World()
+  val player = Player()
 
   init {
-    batch = SpriteBatch()
-    world = World()
+    val c = batch.getColor()
+    batch.setColor(c.r, c.g, c.b, 1f)
   }
 
   override fun hide() {
@@ -23,16 +24,17 @@ class GameScreen : Screen {
 
   override fun render(delta: Float) {
     if (Gdx.input.isKeyPressed(Keys.LEFT))
-      world.changeX(-(100 * Gdx.graphics.getDeltaTime()).toInt());
+      world.changeX(-(75 * Gdx.graphics.getDeltaTime()).toInt());
 
     if (Gdx.input.isKeyPressed(Keys.RIGHT))
-      world.changeX((100 * Gdx.graphics.getDeltaTime()).toInt());
+      world.changeX((75 * Gdx.graphics.getDeltaTime()).toInt());
 
 
     Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     batch.begin()
     world.show(batch)
+    player.show(batch, 10, 10)
     batch.end()
   }
 

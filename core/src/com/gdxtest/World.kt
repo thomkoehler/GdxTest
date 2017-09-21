@@ -40,13 +40,16 @@ class World : IWorld {
     for (x in offsetX..(width - 1)) {
       for (y in offsetY..(height - 1)) {
         val block = world[x + y * width]
-        block.show(batch, x, y)
+        block.show(batch, x - offsetX, y - offsetY)
       }
     }
   }
 
   override fun changeX(deltaX: Int) {
     offsetX += deltaX
+    if(offsetX < 0) {
+      offsetX = 0
+    }
   }
 
   fun dispose() {
