@@ -1,5 +1,6 @@
 package com.gdxtest
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
@@ -47,7 +48,7 @@ class World : IWorld {
 
   override fun changeX(deltaX: Int) {
     offsetX += deltaX
-    if(offsetX < 0) {
+    if (offsetX < 0) {
       offsetX = 0
     }
   }
@@ -73,19 +74,21 @@ class World : IWorld {
   private fun loadWorldFile() {
     var x: Int = 0
 
-    File(WORLD_FILE_NAME).forEachLine { line ->
-      var y: Int = 0
-      line.forEach { c ->
-        when (c) {
-          ' ' -> world[x + y * width] = emptyBlock
-          'G' -> world[x + y * width] = groundBlock
-          'g' -> world[x + y * width] = grassBlock
-          'S' -> world[x + y * width] = stoneBlock
-        }
+    Gdx.files.internal(WORLD_FILE_NAME).reader().useLines { lines ->
+      lines.forEach { line ->
+        var y: Int = 0
+        line.forEach { c ->
+          when (c) {
+            ' ' -> world[x + y * width] = emptyBlock
+            'G' -> world[x + y * width] = groundBlock
+            'g' -> world[x + y * width] = grassBlock
+            'S' -> world[x + y * width] = stoneBlock
+          }
 
-        ++y
+          ++y
+        }
+        ++x
       }
-      ++x
     }
   }
 }
