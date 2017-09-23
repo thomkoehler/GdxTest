@@ -23,14 +23,23 @@ class GameScreen : Screen {
   }
 
   override fun render(delta: Float) {
-    if (Gdx.input.isKeyPressed(Keys.LEFT))
-      world.changeX(-(75 * Gdx.graphics.getDeltaTime()).toInt());
+    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+      world.offsetX -= (75 * Gdx.graphics.getDeltaTime()).toInt();
+    }
 
-    if (Gdx.input.isKeyPressed(Keys.RIGHT))
-      world.changeX((75 * Gdx.graphics.getDeltaTime()).toInt());
+    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+      world.offsetX += (75 * Gdx.graphics.getDeltaTime()).toInt();
+    }
 
+    if (Gdx.input.isKeyPressed(Keys.UP)) {
+      player.y += (75 * Gdx.graphics.getDeltaTime()).toInt();
+    }
 
-    Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
+    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+      player.y -= (75 * Gdx.graphics.getDeltaTime()).toInt();
+    }
+
+    Gdx.gl.glClearColor(.06f, .64f, .92f, 1f)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     batch.begin()
     world.show(batch)

@@ -21,19 +21,21 @@ class World : IWorld {
   private val groundBlock = TextureRegionBlock(TextureRegion(textures, 2 * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
   private val emptyBlock = EmptyBlock()
 
-  private val width: Int
-  private val height: Int
-  private var offsetX: Int
-  private val offsetY: Int
-  private val world: Array<IBlock>
+  private val width: Int = 800
+  private val height: Int = 600
+  override var offsetX: Int = 0
+    set(value) {
+      field = if (value < 0) 0 else value
+    }
+
+  override var offsetY: Int = 0
+    set(value) {
+      field = if (value < 0) 0 else value
+    }
+
+  private val world: Array<IBlock> = Array(width * height, { _ -> emptyBlock })
 
   init {
-    width = 800
-    height = 600
-    offsetX = 0
-    offsetY = 0
-    world = Array(width * height, { _ -> emptyBlock })
-
     loadWorld()
   }
 
@@ -43,13 +45,6 @@ class World : IWorld {
         val block = world[x + y * width]
         block.show(batch, x - offsetX, y - offsetY)
       }
-    }
-  }
-
-  override fun changeX(deltaX: Int) {
-    offsetX += deltaX
-    if (offsetX < 0) {
-      offsetX = 0
     }
   }
 
