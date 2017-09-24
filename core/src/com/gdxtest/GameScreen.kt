@@ -23,26 +23,26 @@ class GameScreen : Screen {
   }
 
   override fun render(delta: Float) {
+    val deltaTime = Gdx.graphics.getDeltaTime()
+
     if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-      world.offsetX -= (75 * Gdx.graphics.getDeltaTime()).toInt();
+      world.offsetX -= (75 * deltaTime).toInt();
     }
 
     if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-      world.offsetX += (75 * Gdx.graphics.getDeltaTime()).toInt();
-    }
-
-    if (Gdx.input.isKeyPressed(Keys.UP)) {
-      player.y += (75 * Gdx.graphics.getDeltaTime()).toInt();
-    }
-
-    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-      player.y -= (75 * Gdx.graphics.getDeltaTime()).toInt();
+      world.offsetX += (75 * deltaTime).toInt();
     }
 
     Gdx.gl.glClearColor(.06f, .64f, .92f, 1f)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     batch.begin()
     world.show(batch)
+
+    if (Gdx.input.isKeyPressed(Keys.UP)) {
+      player.jump();
+    }
+
+    player.calcNextPos(deltaTime)
     player.show(batch, 10, 10)
     batch.end()
   }
