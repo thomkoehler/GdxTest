@@ -27,6 +27,8 @@ class GameScreen : Screen {
     Gdx.gl.glClearColor(.06f, .64f, .92f, 1f)
     Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
     val input = createInput()
+    gameState.screenHeight = Gdx.graphics.height.toFloat()
+    gameState.screenWidth = Gdx.graphics.width.toFloat()
 
     player.update(input, gameState)
 

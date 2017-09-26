@@ -14,9 +14,9 @@ enum class Block {
 
 class World : IWorld {
   private val textures = Texture("Textures16.png")
-  private val stoneBlock = TextureRegionBlock(TextureRegion(textures, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
-  private val grassBlock = TextureRegionBlock(TextureRegion(textures, 3 * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
-  private val groundBlock = TextureRegionBlock(TextureRegion(textures, 2 * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
+  private val stoneBlock = TextureRegionBlock(TextureRegion(textures, 0, 0, BLOCK_WIDTH.toInt(), BLOCK_HEIGHT.toInt()))
+  private val grassBlock = TextureRegionBlock(TextureRegion(textures, 3 * BLOCK_WIDTH.toInt(), 0, BLOCK_WIDTH.toInt(), BLOCK_HEIGHT.toInt()))
+  private val groundBlock = TextureRegionBlock(TextureRegion(textures, 2 * BLOCK_WIDTH.toInt(), 0, BLOCK_WIDTH.toInt(), BLOCK_HEIGHT.toInt()))
   private val emptyBlock = EmptyBlock()
 
   private val world: Array<IBlock> = Array(WORLD_WIDTH * WORLD_HEIGHT, { _ -> emptyBlock })
