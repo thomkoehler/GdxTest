@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import java.io.File
 
 enum class Block {
   EMPTY,
@@ -14,36 +13,23 @@ enum class Block {
 }
 
 class World : IWorld {
-
   private val textures = Texture("Textures16.png")
   private val stoneBlock = TextureRegionBlock(TextureRegion(textures, 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
   private val grassBlock = TextureRegionBlock(TextureRegion(textures, 3 * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
   private val groundBlock = TextureRegionBlock(TextureRegion(textures, 2 * BLOCK_WIDTH, 0, BLOCK_WIDTH, BLOCK_HEIGHT))
   private val emptyBlock = EmptyBlock()
 
-  private val width: Int = 800
-  private val height: Int = 600
-  override var offsetX: Int = 0
-    set(value) {
-      field = if (value < 0) 0 else value
-    }
-
-  override var offsetY: Int = 0
-    set(value) {
-      field = if (value < 0) 0 else value
-    }
-
-  private val world: Array<IBlock> = Array(width * height, { _ -> emptyBlock })
+  private val world: Array<IBlock> = Array(WORLD_WIDTH * WORLD_HEIGHT, { _ -> emptyBlock })
 
   init {
     loadWorld()
   }
 
-  override fun show(batch: SpriteBatch) {
-    for (x in offsetX..(width - 1)) {
-      for (y in offsetY..(height - 1)) {
-        val block = world[x + y * width]
-        block.show(batch, x - offsetX, y - offsetY)
+  override fun render(gameState: GameState, batch: SpriteBatch) {
+    for (x in gameState.offsetX..(WORLD_HEIGHT - 1)) {
+      for (y in gameState.offsetY..(WORLD_HEIGHT - 1)) {
+        val block = world[x + y * WORLD_WIDTH]
+        block.show(batch, x - gameState.offsetX, y - gameState.offsetY)
       }
     }
   }
@@ -58,11 +44,11 @@ class World : IWorld {
   }
 
   private fun loadDefaultWorld() {
-    for (x in offsetX..(width - 1)) {
-      world[x + 0 * width] = groundBlock
-      world[x + 1 * width] = if (x.rem(2) != 0) stoneBlock else groundBlock
-      world[x + 2 * width] = groundBlock
-      world[x + 3 * width] = grassBlock
+    for (x in 0..(WORLD_WIDTH - 1)) {
+      world[x + 0 * WORLD_WIDTH] = groundBlock
+      world[x + 1 * WORLD_WIDTH] = if (x.rem(2) != 0) stoneBlock else groundBlock
+      world[x + 2 * WORLD_WIDTH] = groundBlock
+      world[x + 3 * WORLD_WIDTH] = grassBlock
     }
   }
 
@@ -74,10 +60,10 @@ class World : IWorld {
         var y: Int = 0
         line.forEach { c ->
           when (c) {
-            ' ' -> world[x + y * width] = emptyBlock
-            'G' -> world[x + y * width] = groundBlock
-            'g' -> world[x + y * width] = grassBlock
-            'S' -> world[x + y * width] = stoneBlock
+            ' ' -> world[x + y * WORLD_WIDTH] = emptyBlock
+            'G' -> world[x + y * WORLD_WIDTH] = groundBlock
+            'g' -> world[x + y * WORLD_WIDTH] = grassBlock
+            'S' -> world[x + y * WORLD_WIDTH] = stoneBlock
           }
 
           ++y
