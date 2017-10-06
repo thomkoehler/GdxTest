@@ -34,6 +34,30 @@ class World : IWorld {
     }
   }
 
+  override fun getXCollision(x0: Float, x1: Float): Float? {
+    if (x1 < 0f) {
+      return 0f
+    }
+
+    if (x1 > WORLD_WIDTH * BLOCK_WIDTH) {
+      return WORLD_WIDTH * BLOCK_WIDTH
+    }
+
+    return null
+  }
+
+  override fun getYCollision(y0: Float, y1: Float): Float? {
+    if (y1 < 0f) {
+      return 0f
+    }
+
+    if (y1 > WORLD_HEIGHT * BLOCK_WIDTH) {
+      return WORLD_HEIGHT * BLOCK_WIDTH
+    }
+
+    return null
+  }
+
   fun dispose() {
     textures.dispose()
   }
