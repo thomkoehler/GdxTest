@@ -31,14 +31,14 @@ class Player {
   }
 
   fun render(gameState: GameState, batch: SpriteBatch) {
-    batch.draw(texture, x - gameState.offsetX.toFloat() * BLOCK_WIDTH, y - gameState.offsetY.toFloat() * BLOCK_HEIGHT)
+    batch.draw(texture, x - gameState.offsetX * BLOCK_WIDTH, y - gameState.offsetY * BLOCK_HEIGHT)
   }
 
   private fun updateGameState(gameState: GameState) {
-    var offsetX = x - gameState.screenWidth / 2
-    var offsetY = y - gameState.screenHeight / 2
-    val maxX = WORLD_WIDTH.toFloat() * BLOCK_WIDTH
-    val maxY = WORLD_HEIGHT.toFloat() * BLOCK_HEIGHT
+    var offsetX = x - gameState.screenWidth / 2f
+    var offsetY = y - gameState.screenHeight / 2f
+    val maxX = WORLD_WIDTH * BLOCK_WIDTH
+    val maxY = WORLD_HEIGHT * BLOCK_HEIGHT
 
     if (offsetX < 0f) {
       offsetX = 0f
@@ -52,8 +52,8 @@ class Player {
       offsetY = maxY - gameState.screenHeight
     }
 
-    gameState.offsetX = (offsetX / BLOCK_WIDTH).toInt()
-    gameState.offsetY = (offsetY / BLOCK_HEIGHT).toInt()
+    gameState.offsetX = offsetX / BLOCK_WIDTH
+    gameState.offsetY = offsetY / BLOCK_HEIGHT
   }
 
   private fun jump() {

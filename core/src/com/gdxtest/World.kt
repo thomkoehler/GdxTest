@@ -19,16 +19,16 @@ class World : IWorld {
   private val groundBlock = TextureRegionBlock(TextureRegion(textures, 2 * BLOCK_WIDTH.toInt(), 0, BLOCK_WIDTH.toInt(), BLOCK_HEIGHT.toInt()))
   private val emptyBlock = EmptyBlock()
 
-  private val world: Array<IBlock> = Array(WORLD_WIDTH * WORLD_HEIGHT, { _ -> emptyBlock })
+  private val world: Array<IBlock> = Array((WORLD_WIDTH * WORLD_HEIGHT).toInt(), { _ -> emptyBlock })
 
   init {
     loadWorld()
   }
 
   override fun render(gameState: GameState, batch: SpriteBatch) {
-    for (x in gameState.offsetX..(WORLD_HEIGHT - 1)) {
-      for (y in gameState.offsetY..(WORLD_HEIGHT - 1)) {
-        val block = world[x + y * WORLD_WIDTH]
+    for (x in gameState.offsetX.toInt()..(WORLD_HEIGHT - 1f).toInt()) {
+      for (y in gameState.offsetY.toInt()..(WORLD_HEIGHT - 1f).toInt()) {
+        val block = world[x + y * WORLD_WIDTH.toInt()]
         block.show(batch, x - gameState.offsetX, y - gameState.offsetY)
       }
     }
@@ -44,11 +44,11 @@ class World : IWorld {
   }
 
   private fun loadDefaultWorld() {
-    for (x in 0..(WORLD_WIDTH - 1)) {
-      world[x + 0 * WORLD_WIDTH] = groundBlock
-      world[x + 1 * WORLD_WIDTH] = if (x.rem(2) != 0) stoneBlock else groundBlock
-      world[x + 2 * WORLD_WIDTH] = groundBlock
-      world[x + 3 * WORLD_WIDTH] = grassBlock
+    for (x in 0..(WORLD_WIDTH.toInt() - 1)) {
+      world[x + 0 * WORLD_WIDTH.toInt()] = groundBlock
+      world[x + 1 * WORLD_WIDTH.toInt()] = if (x.rem(2) != 0) stoneBlock else groundBlock
+      world[x + 2 * WORLD_WIDTH.toInt()] = groundBlock
+      world[x + 3 * WORLD_WIDTH.toInt()] = grassBlock
     }
   }
 
@@ -60,10 +60,10 @@ class World : IWorld {
         var y: Int = 0
         line.forEach { c ->
           when (c) {
-            ' ' -> world[x + y * WORLD_WIDTH] = emptyBlock
-            'G' -> world[x + y * WORLD_WIDTH] = groundBlock
-            'g' -> world[x + y * WORLD_WIDTH] = grassBlock
-            'S' -> world[x + y * WORLD_WIDTH] = stoneBlock
+            ' ' -> world[x + y * WORLD_WIDTH.toInt()] = emptyBlock
+            'G' -> world[x + y * WORLD_WIDTH.toInt()] = groundBlock
+            'g' -> world[x + y * WORLD_WIDTH.toInt()] = grassBlock
+            'S' -> world[x + y * WORLD_WIDTH.toInt()] = stoneBlock
           }
 
           ++y
